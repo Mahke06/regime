@@ -6,22 +6,17 @@
 
     <title><?= isset($title) ? $title : 'Régime App' ?></title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-    <!-- Style -->
     <link href="/css/style.css" rel="stylesheet">
 
-    <!-- ChartJS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body style="background:#f5f7fb;">
+<body class="site">
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
 
@@ -43,8 +38,6 @@
                 <?php if (session()->get('user_id')): ?>
 
                     <?php if (session()->get('roles') === 'admin'): ?>
-
-                        <!-- ADMIN -->
 
                         <li class="nav-item">
                             <a class="nav-link" href="/dashboard">
@@ -108,7 +101,7 @@
                         <li class="nav-item">
                             <span class="nav-link text-warning">
                                 <i class="bi bi-person-circle"></i>
-                                <?= htmlspecialchars(session()->get('nom')) ?>
+                                <?= esc(session()->get('nom')) ?>
                             </span>
                         </li>
 
@@ -119,8 +112,6 @@
                         </li>
 
                     <?php else: ?>
-
-                        <!-- USER -->
 
                         <li class="nav-item">
                             <a class="nav-link" href="/profile">
@@ -163,8 +154,6 @@
 
                 <?php else: ?>
 
-                    <!-- GUEST -->
-
                     <li class="nav-item">
                         <a class="nav-link" href="/login">
                             Connexion
@@ -186,7 +175,6 @@
     </div>
 </nav>
 
-<!-- FLASH -->
 <div class="container mt-3">
 
     <?php if (session()->getFlashdata('success')): ?>
@@ -219,31 +207,27 @@
 
 </div>
 
-<!-- CONTENT -->
 <main>
 
     <?= $this->renderSection('content') ?>
 
 </main>
 
-<!-- FOOTER -->
-<footer class="bg-dark text-white text-center py-4 mt-5">
+<footer class="site-footer">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <div class="footer-left text-center text-md-start">
+            <strong>&copy; 2026 Régime App</strong>
+            <div class="small text-muted">Application de gestion de régimes</div>
+        </div>
 
-    <div class="container">
-
-        <p class="mb-1">
-            &copy; 2026 Régime App
-        </p>
-
-        <small>
-            Application de gestion de régimes
-        </small>
-
+        <div class="footer-right text-center text-md-end">
+            <a href="/" class="text-muted me-3 footer-link">Accueil</a>
+            <a href="/profile" class="text-muted me-3 footer-link">Profil</a>
+            <a href="/suggestions" class="text-muted footer-link">Suggestions</a>
+        </div>
     </div>
-
 </footer>
 
-<!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

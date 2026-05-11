@@ -13,30 +13,33 @@ class Activite extends BaseController
         $this->activiteModel = new ActiviteModel();
     }
 
-    /**
-     * Liste toutes les activités
-     */
     public function index()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $data = [
             'activites' => $this->activiteModel->findAll()
         ];
         return view('activites/index', $data);
     }
 
-    /**
-     * Affiche le formulaire de création
-     */
     public function create()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         return view('activites/create');
     }
 
-    /**
-     * Enregistre une nouvelle activité
-     */
     public function store()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
             'nom' => 'required|min_length[3]',
             'types' => 'required|in_list[perte_poids,prise_poids,maintien]',
@@ -54,11 +57,12 @@ class Activite extends BaseController
         return redirect()->to('/activites')->with('success', 'Activité créée avec succès');
     }
 
-    /**
-     * Affiche le formulaire d'édition
-     */
     public function edit($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $activite = $this->activiteModel->find($id);
         if (!$activite) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Activité non trouvée');
@@ -68,11 +72,12 @@ class Activite extends BaseController
         return view('activites/edit', $data);
     }
 
-    /**
-     * Met à jour une activité
-     */
     public function update($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
             'nom' => 'required|min_length[3]',
             'types' => 'required|in_list[perte_poids,prise_poids,maintien]',
@@ -90,11 +95,12 @@ class Activite extends BaseController
         return redirect()->to('/activites')->with('success', 'Activité mise à jour avec succès');
     }
 
-    /**
-     * Supprime une activité
-     */
     public function delete($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $this->activiteModel->delete($id);
         return redirect()->to('/activites')->with('success', 'Activité supprimée avec succès');
     }

@@ -1,8 +1,10 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 
-<div class="auth-container">
-    <h1>Connexion</h1>
+<div class="container py-4">
+    <div class="auth-container hero-panel">
+    <h1 class="hero-lead mb-2" style="font-size:2.2rem;">Connexion</h1>
+    <p class="text-muted mb-4">Connectez-vous pour accéder à votre espace santé personnalisé.</p>
 
     <?php $errors = session()->getFlashdata('errors') ?? []; ?>
 
@@ -42,6 +44,7 @@
     </form>
 
     <p>Pas encore inscrit ? <a href="/register">Créer un compte</a></p>
+    </div>
 </div>
 
 <script src="/js/login.js"></script>

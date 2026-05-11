@@ -3,171 +3,142 @@
 
 <div class="container py-4">
 
-    <div class="profile-page">
-
-        <!-- HEADER -->
-        <div class="profile-header">
-            <div>
-                <h1 class="profile-title">Mon Profil</h1>
-                <p class="profile-subtitle">
-                    Bienvenue <?= esc($user['nom']) ?>
-                </p>
-            </div>
-
-            <div class="profile-badge <?= $user['gold'] ? 'gold-active' : 'gold-inactive' ?>">
-                <?= $user['gold'] ? '⭐ Gold Actif' : 'Standard' ?>
-            </div>
-        </div>
-
-        <!-- INFOS -->
-        <div class="profile-card profile-section">
-            <h3 class="section-title">Informations personnelles</h3>
-
-            <div class="profile-grid">
-                <div class="info-box">
-                    <span>Email</span>
-                    <strong><?= esc($user['email']) ?></strong>
-                </div>
-
-                <div class="info-box">
-                    <span>Genre</span>
-                    <strong><?= ucfirst($user['genre']) ?></strong>
-                </div>
-
-                <div class="info-box">
-                    <span>Taille</span>
-                    <strong><?= esc($user['taille']) ?> cm</strong>
-                </div>
-
-                <div class="info-box">
-                    <span>Poids</span>
-                    <strong><?= esc($user['poids']) ?> kg</strong>
-                </div>
-
-                <div class="info-box">
-                    <span>IMC</span>
-                    <strong><?= esc($user['imc']) ?></strong>
-                </div>
-
-                <div class="info-box">
-                    <span>Solde</span>
-                    <strong><?= number_format($user['solde'], 2) ?> AR</strong>
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="hero-panel">
+                <div class="card-body p-4 p-md-5 d-flex flex-wrap justify-content-between align-items-center gap-3">
+                    <div>
+                        <span class="badge <?= $user['gold'] ? 'bg-warning text-dark' : 'bg-secondary' ?> rounded-pill mb-3">
+                            <?= $user['gold'] ? 'Gold actif' : 'Compte standard' ?>
+                        </span>
+                        <h1 class="h2 fw-bold mb-2">Mon profil</h1>
+                        <p class="text-muted mb-0">Bienvenue <?= esc($user['nom']) ?>, voici votre résumé personnel.</p>
+                    </div>
+                    <div class="text-end">
+                        <div class="display-6 fw-bold text-primary mb-1"><?= number_format($user['solde'], 2) ?> AR</div>
+                        <div class="text-muted">Solde disponible</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- OBJECTIFS -->
-        <div class="profile-card profile-section">
-            <h3 class="section-title">Mes objectifs</h3>
-
-            <?php if (!empty($objectifs)): ?>
-                <div class="objectif-list">
-                    <?php foreach ($objectifs as $objectif): ?>
-                        <div class="objectif-item">
-                             <?= esc($objectif['nom_objectif']) ?>
+        <div class="col-lg-7">
+            <div class="suggestion-card mb-4">
+                <div class="card-body p-4">
+                    <h3 class="h5 fw-bold mb-3">Informations personnelles</h3>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <span class="text-muted d-block mb-1">Email</span>
+                                <strong><?= esc($user['email']) ?></strong>
+                            </div>
                         </div>
-                    <?php endforeach; ?>
+                        <div class="col-md-4">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <span class="text-muted d-block mb-1">Genre</span>
+                                <strong><?= ucfirst($user['genre']) ?></strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <span class="text-muted d-block mb-1">IMC</span>
+                                <strong><?= esc($user['imc']) ?></strong>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <span class="text-muted d-block mb-1">Taille</span>
+                                <strong><?= esc($user['taille']) ?> cm</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3 bg-light rounded-3 h-100">
+                                <span class="text-muted d-block mb-1">Poids</span>
+                                <strong><?= esc($user['poids']) ?> kg</strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            <?php else: ?>
-                <p class="empty-text">
-                    Aucun objectif choisi.
-                </p>
+            </div>
 
-                <a href="/objectifs/choose" class="btn btn-primary">
-                    Choisir un objectif
-                </a>
+            <div class="suggestion-card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3 class="h5 fw-bold mb-0">Mes objectifs</h3>
+                        <a href="/objectifs/choose" class="btn btn-sm btn-outline-primary">Gérer</a>
+                    </div>
+
+                    <?php if (!empty($objectifs)): ?>
+                        <div class="d-flex flex-wrap gap-2">
+                            <?php foreach ($objectifs as $objectif): ?>
+                                <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2"><?= esc($objectif['nom_objectif']) ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="alert alert-light border mb-0">Aucun objectif choisi pour le moment.</div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+                <div class="suggestion-card mb-4">
+                    <div class="card-body p-4">
+                    <h3 class="h5 fw-bold mb-3">Modifier mon profil</h3>
+                    <form method="POST" action="/profile/update" class="row g-3">
+                        <?= csrf_field() ?>
+                        <div class="col-12">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" value="<?= esc($user['nom']) ?>" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="taille" class="form-label">Taille (cm)</label>
+                            <input type="number" class="form-control" id="taille" name="taille" value="<?= esc($user['taille']) ?>" step="0.1" required>
+                        </div>
+                        <div class="col-6">
+                            <label for="poids" class="form-label">Poids (kg)</label>
+                            <input type="number" class="form-control" id="poids" name="poids" value="<?= esc($user['poids']) ?>" step="0.1" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100">Mettre à jour</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h3 class="h5 fw-bold mb-3">Portefeuille</h3>
+                    <div class="p-4 rounded-4 bg-dark text-white mb-3">
+                        <span class="d-block text-white-50 mb-1">Solde actuel</span>
+                        <h2 class="mb-0"><?= number_format($user['solde'], 2) ?> AR</h2>
+                    </div>
+
+                    <form method="POST" action="/codes/redeem" class="row g-3">
+                        <?= csrf_field() ?>
+                        <div class="col-12">
+                            <label for="code" class="form-label">Code promo</label>
+                            <input type="text" class="form-control" id="code" name="code" placeholder="Entrez votre code" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-outline-secondary w-100">Valider le code</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <?php if (!$user['gold']): ?>
+                <div class="suggestion-card bg-warning-subtle">
+                    <div class="card-body p-4 d-flex justify-content-between align-items-center gap-3">
+                        <div>
+                            <h3 class="h5 fw-bold mb-2">Activez Gold Premium</h3>
+                            <p class="mb-0 text-muted">Profitez de 15% de réduction sur tous les régimes.</p>
+                        </div>
+                        <a href="/gold/activate" class="btn btn-warning text-dark fw-semibold">Activer</a>
+                    </div>
+                </div>
             <?php endif; ?>
         </div>
-
-        <!-- MODIFIER -->
-        <div class="profile-card profile-section">
-            <h3 class="section-title">Modifier mon profil</h3>
-
-            <form method="POST" action="/profile/update" class="profile-form">
-                <?= csrf_field() ?>
-
-                <div class="form-group">
-                    <label for="nom">Nom</label>
-                    <input type="text"
-                           id="nom"
-                           name="nom"
-                           value="<?= esc($user['nom']) ?>"
-                           required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="taille">Taille (cm)</label>
-                        <input type="number"
-                               id="taille"
-                               name="taille"
-                               value="<?= esc($user['taille']) ?>"
-                               step="0.1"
-                               required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="poids">Poids (kg)</label>
-                        <input type="number"
-                               id="poids"
-                               name="poids"
-                               value="<?= esc($user['poids']) ?>"
-                               step="0.1"
-                               required>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary">
-                    Mettre à jour
-                </button>
-            </form>
-        </div>
-
-        <!-- WALLET -->
-        <div class="profile-card profile-section">
-            <h3 class="section-title">Portefeuille</h3>
-
-            <div class="wallet-box">
-                <div>
-                    <span class="wallet-label">Solde actuel</span>
-                    <h2><?= number_format($user['solde'], 2) ?> AR</h2>
-                </div>
-            </div>
-
-            <form method="POST" action="/codes/redeem" class="promo-form">
-                <?= csrf_field() ?>
-
-                <div class="form-group">
-                    <label for="code">Code promo</label>
-                    <input type="text"
-                           id="code"
-                           name="code"
-                           placeholder="Entrez votre code"
-                           required>
-                </div>
-
-                <button type="submit" class="btn btn-secondary">
-                    Valider le code
-                </button>
-            </form>
-        </div>
-
-        <!-- GOLD -->
-        <?php if (!$user['gold']): ?>
-            <div class="gold-section">
-                <div>
-                    <h3>Activez Gold Premium</h3>
-                    <p>Obtenez 15% de réduction sur tous les régimes.</p>
-                </div>
-
-                <a href="/gold/activate" class="btn btn-warning">
-                    Activer Gold
-                </a>
-            </div>
-        <?php endif; ?>
-
     </div>
-
-</div>
 
 <?= $this->endSection() ?>

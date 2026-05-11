@@ -1,23 +1,32 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 
-<h1>Ajouter un Code</h1>
-
-<form method="POST" action="/codes/store">
-    <?= csrf_field() ?>
-
-    <div class="form-group">
-        <label for="code">Code (nombre):</label>
-        <input type="number" id="code" name="code" value="<?= old('code') ?>" required>
+<div class="container py-4">
+    <div class="hero-panel mb-4">
+        <h1 class="h3 fw-bold mb-1">Ajouter un Code</h1>
+        <p class="text-muted mb-0">Créez un nouveau code de recharge avec son montant.</p>
     </div>
 
-    <div class="form-group">
-        <label for="montant">Montant (€):</label>
-        <input type="number" id="montant" name="montant" value="<?= old('montant') ?>" step="0.01" required>
-    </div>
+    <form method="POST" action="/codes/store" class="suggestion-card p-4">
+        <?= csrf_field() ?>
 
-    <button type="submit" class="btn btn-primary">Créer</button>
-    <a href="/codes" class="btn btn-secondary">Annuler</a>
-</form>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="code">Code (nombre)</label>
+                <input type="number" id="code" name="code" value="<?= old('code') ?>" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="montant">Montant (€)</label>
+                <input type="number" id="montant" name="montant" value="<?= old('montant') ?>" step="0.01" required>
+            </div>
+
+            <div class="col-12 d-flex flex-wrap gap-2">
+                <button type="submit" class="btn btn-primary">Créer</button>
+                <a href="/codes" class="btn btn-secondary">Annuler</a>
+            </div>
+        </div>
+    </form>
+</div>
 
 <?= $this->endSection() ?>

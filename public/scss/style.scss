@@ -309,6 +309,26 @@ tbody tr:hover {
   font-weight: 800;
 }
 
+/* UI polish: global scale and improved components */
+html { font-size: 16px; }
+body { font-size: 1rem; }
+.page-title { font-size: 2.25rem; }
+
+.navbar { padding: 0.9rem 0; }
+.navbar-brand { font-size: 1.25rem; }
+
+.card, .suggestion-card, .objectif-card { border-radius: 14px; box-shadow: 0 12px 40px rgba(2,6,23,0.06); transition: transform .22s ease, box-shadow .22s ease; }
+.card:hover, .suggestion-card:hover, .objectif-card:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(2,6,23,0.09); }
+
+.hero-panel { @include card-base; padding: 34px; border-radius: 14px; }
+.hero-lead { font-size: 2.8rem; line-height:1.05; font-weight:800; color:#071033; }
+.hero-sub { color: $c-muted; font-size:1.05rem; margin-top:0.8rem; }
+
+.btn-primary { background: linear-gradient(90deg,$c-primary,$c-primary-h); box-shadow: 0 10px 30px rgba(37,99,235,0.14); padding:12px 22px; border-radius:12px; }
+
+.container { max-width: 1180px; }
+
+
 .section-title {
   margin: 0 0 1rem;
   font-size: 1.05rem;
@@ -346,4 +366,29 @@ tbody tr:hover {
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Extra tweaks to align with consolidated CSS */
+.hero{
+  min-height: 65vh;
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.55)), url('../images/fitness-bg.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:34px 18px;
+  color:#fff;
+}
+
+.hero h1{ font-size:3rem; margin-bottom:18px; font-weight:700; }
+.hero p{ font-size:1.05rem; max-width:760px; margin-bottom:28px; color:#f1f1f1; }
+
+.feature{ padding:22px; border-radius:14px; }
+.feature::before{ content:''; width:46px; height:46px; display:block; border-radius:10px; background:linear-gradient(135deg,$c-primary,$c-primary-h); margin-bottom:12px; }
+
+@media (max-width: 768px){
+  .hero{ min-height:55vh; padding:28px 14px; }
+  .hero h1{ font-size:1.8rem; }
+  .price-item{ flex-direction:column; align-items:flex-start; }
+  .btn{ padding:10px 14px; }
 }

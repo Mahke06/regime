@@ -1,143 +1,88 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container objectifs-page">
 
-        <div class="objectifs-header">
-            <div>
-                <h1 class="page-title">Choisir mes objectifs</h1>
-                <p class="objectifs-subtitle">
-                    Sélectionnez jusqu'à 
-                    <strong><?= $maxObjectifs ?></strong> objectifs
-                </p>
+<div class="container py-4 objectifs-page">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center mb-3 hero-panel p-3">
+                <div>
+                    <h1 class="h2 fw-bold mb-1">Choisir mes objectifs</h1>
+                    <p class="text-muted mb-0">Sélectionnez jusqu’à <strong><?= $maxObjectifs ?></strong> objectifs.</p>
+                </div>
+                <div class="badge bg-dark rounded-pill px-3 py-2 fs-6">
+                    <?= count($userObjectifs) ?>/<?= $maxObjectifs ?> choisis
+                </div>
             </div>
 
-            <div class="objectif-counter">
-                <?= count($userObjectifs) ?>/<?= $maxObjectifs ?>
-            </div>
-        </div>
+                    <div class="row g-3">
+                <?php foreach ($allObjectifs as $objectif): ?>
+                    <?php
+                    $isSelected = false;
 
-        <!-- LISTE DES OBJECTIFS -->
-        <div class="objectifs-grid">
-
-            <?php foreach ($allObjectifs as $objectif): ?>
-
-                <?php
-                $isSelected = false;
-
-                foreach ($userObjectifs as $userObj) {
-                    if ($userObj['id'] === $objectif['id']) {
-                        $isSelected = true;
-                        break;
+                    foreach ($userObjectifs as $userObj) {
+                        if ($userObj['id'] === $objectif['id']) {
+                            $isSelected = true;
+                            break;
+                        }
                     }
-                }
-                ?>
+                    ?>
+                    <div class="col-md-6">
+                        <div class="suggestion-card h-100 <?= $isSelected ? 'border border-success' : '' ?>">
+                            <div class="card-body p-4 d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+                                    <div>
+                                        <h3 class="h5 fw-bold mb-1"><?= esc($objectif['nom_objectif']) ?></h3>
+                                        <p class="text-muted mb-0">Objectif personnel pour votre parcours.</p>
+                                    </div>
+                                    <?php if ($isSelected): ?>
+                                        <span class="badge bg-success rounded-pill">Sélectionné</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-secondary rounded-pill">Disponible</span>
+                                    <?php endif; ?>
+                                </div>
 
-                <div class="objectif-card <?= $isSelected ? 'selected' : '' ?>">
-
-                    <div class="objectif-top">
-                        <h3><?= esc($objectif['nom_objectif']) ?></h3>
-
-                        <?php if ($isSelected): ?>
-                            <span class="objectif-badge active">
-                                ✓ Sélectionné
-                            </span>
-                        <?php else: ?>
-                            <span class="objectif-badge">
-                                Disponible
-                            </span>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="objectif-actions">
-
-                        <?php if ($isSelected): ?>
-
-                            <a href="/objectifs/remove/<?= $objectif['id'] ?>"
-                            class="btn btn-danger objectif-btn">
-                                Supprimer
-                            </a>
-                            
-
-                        <?php else: ?>
-
-                            <form method="POST" action="/objectifs/add">
-                                <?= csrf_field() ?>
-
-                                <input type="hidden"
-                                    name="id_objectif"
-                                    value="<?= $objectif['id'] ?>">
-
-                                <button type="submit"
-                                        class="btn btn-success objectif-btn">
-                                    Ajouter
-                                </button>
-                            </form>
-
-                        <?php endif; ?>
-
-                    </div>
-
-                </div>
-
-            <?php endforeach; ?>
-
-        </div>
-
-        <!-- OBJECTIFS SELECTIONNES -->
-        <div class="profile-card objectifs-selected">
-
-            <div class="selected-header">
-                <h3 class="section-title">
-                    Mes objectifs sélectionnés
-                </h3>
-
-                <span class="selected-count">
-                    <?= count($userObjectifs) ?>/<?= $maxObjectifs ?>
-                </span>
-            </div>
-
-            <?php if (!empty($userObjectifs)): ?>
-
-                <div class="selected-list">
-
-                    <?php foreach ($userObjectifs as $objectif): ?>
-
-                        <div class="selected-item">
-                            <?= esc($objectif['nom_objectif']) ?>
+                                <div class="mt-auto">
+                                    <?php if ($isSelected): ?>
+                                        <a href="/objectifs/remove/<?= $objectif['id'] ?>" class="btn btn-outline-danger w-100">Supprimer</a>
+                                    <?php else: ?>
+                                        <form method="POST" action="/objectifs/add">
+                                            <?= csrf_field() ?>
+                                            <input type="hidden" name="id_objectif" value="<?= $objectif['id'] ?>">
+                                            <button type="submit" class="btn btn-success w-100">Ajouter</button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
-
-                    <?php endforeach; ?>
-
-                </div>
-
-            <?php else: ?>
-
-                <div class="empty-objectifs">
-                    <p>Aucun objectif sélectionné pour le moment.</p>
-                </div>
-
-            <?php endif; ?>
-
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
 
-        <!-- RETOUR -->
-        <div class="objectifs-footer">
-            <a href="/profile" class="btn btn-secondary">
-                Retour au profil
-            </a>
-        </div>
+        <div class="col-lg-4">
+            <div class="suggestion-card sticky-top" style="top:1rem;">
+                <div class="card-body p-4">
+                    <h3 class="h5 fw-bold mb-3">Mes objectifs sélectionnés</h3>
 
+                    <?php if (!empty($userObjectifs)): ?>
+                        <div class="d-flex flex-column gap-2 mb-4">
+                            <?php foreach ($userObjectifs as $objectif): ?>
+                                <div class="p-3 rounded-3 bg-light fw-medium">
+                                    <?= esc($objectif['nom_objectif']) ?>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="alert alert-light border mb-4">
+                            Aucun objectif sélectionné pour le moment.
+                        </div>
+                    <?php endif; ?>
+
+                    <a href="/profile" class="btn btn-outline-secondary w-100">Retour au profil</a>
+                </div>
+            </div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+
 <?= $this->endSection() ?>

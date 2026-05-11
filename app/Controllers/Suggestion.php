@@ -25,9 +25,6 @@ class Suggestion extends BaseController
         $this->userObjectifModel = new UserObjectifModel();
     }
 
-    /**
-     * Affiche les suggestions de régimes et activités basées sur les objectifs de l'utilisateur
-     */
     public function index()
     {
         $session = session();
@@ -40,15 +37,12 @@ class Suggestion extends BaseController
         $user = $this->userModel->find($userId);
         $userObjectifs = $this->userObjectifModel->getUserObjectifs($userId);
 
-        // Si l'utilisateur n'a pas d'objectif, le rediriger
         if (empty($userObjectifs)) {
             return redirect()->to('/objectifs/choose')->with('info', 'Veuillez d\'abord choisir vos objectifs');
         }
 
-        // Déterminer le type d'activité basé sur les objectifs
         $activiteTypes = $this->getActiviteTypesByObjectifs($userObjectifs);
 
-        // Récupérer les activités correspondantes
         $suggestedActivites = [];
         foreach ($activiteTypes as $type) {
             $activites = $this->activiteModel
@@ -57,14 +51,12 @@ class Suggestion extends BaseController
             $suggestedActivites = array_merge($suggestedActivites, $activites);
         }
 
-        // Récupérer tous les régimes avec leurs prix
         $suggestedRegimes = $this->regimeModel->findAll();
         foreach ($suggestedRegimes as &$regime) {
             $regime['prix'] = $this->regimePrixModel->getRegimePrix($regime['id']);
         }
 
-        // Appliquer la remise Gold si l'utilisateur l'a activé
-        $goldDiscount = $user['gold'] ? 0.85 : 1; // 15% de remise
+        $goldDiscount = $user['gold'] ? 0.85 : 1;
 
         $data = [
             'user' => $user,
@@ -77,9 +69,6 @@ class Suggestion extends BaseController
         return view('suggestions/index', $data);
     }
 
-    /**
-     * Détermine les types d'activités recommandées basées sur les objectifs
-     */
     private function getActiviteTypesByObjectifs($objectifs)
     {
         $types = [];
@@ -96,13 +85,9 @@ class Suggestion extends BaseController
             }
         }
 
-        // Supprimer les doublons
         return array_unique($types);
     }
 
-    /**
-     * Affiche les détails d'un régime spécifique avec ses variantes de prix
-     */
     public function showRegimeDetails($id)
     {
         $session = session();
@@ -121,7 +106,6 @@ class Suggestion extends BaseController
         $prices = $this->regimePrixModel->getRegimePrix($id);
         $userObjectifs = $this->userObjectifModel->getUserObjectifs($userId);
 
-        // Appliquer la remise Gold
         $goldDiscount = $user['gold'] ? 0.85 : 1;
 
         $data = [
@@ -135,9 +119,6 @@ class Suggestion extends BaseController
         return view('suggestions/regime_details', $data);
     }
 
-    /**
-     * Affiche les détails d'une activité spécifique
-     */
     public function showActiviteDetails($id)
     {
         $session = session();
@@ -164,9 +145,6 @@ class Suggestion extends BaseController
         return view('suggestions/activite_details', $data);
     }
 
-    /**
-     * Affiche un formulaire d'achat pour un régime + durée
-     */
     public function purchaseRegime($regimeId)
     {
         $session = session();
@@ -195,9 +173,6 @@ class Suggestion extends BaseController
         return view('suggestions/purchase_regime', $data);
     }
 
-    /**
-     * Traite l'achat d'un régime
-     */
     public function confirmPurchase()
     {
         $session = session();
@@ -224,20 +199,21 @@ class Suggestion extends BaseController
             return redirect()->back()->with('error', 'Régime ou prix non trouvé');
         }
 
+        if ((int) $regimePrice['id_regime'] !== (int) $regimeId) {
+            return redirect()->back()->with('error', 'Option de prix invalide pour ce régime');
+        }
+
         $user = $this->userModel->find($userId);
         $finalPrice = $regimePrice['prix'];
 
-        // Appliquer la remise Gold
         if ($user['gold']) {
             $finalPrice = $finalPrice * 0.85;
         }
 
-        // Vérifier le solde
         if ($user['solde'] < $finalPrice) {
             return redirect()->back()->with('error', 'Solde insuffisant. Veuillez recharger votre portefeuille');
         }
 
-        // Déduire du solde
         $newSolde = $user['solde'] - $finalPrice;
         $this->userModel->update($userId, ['solde' => $newSolde]);
         $session->set('solde', $newSolde);

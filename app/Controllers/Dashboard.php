@@ -73,7 +73,7 @@ class Dashboard extends BaseController
             ->setBody($pdf);
     }
 
-    private function requireAdmin()
+    protected function requireAdmin()
     {
         if (session()->get('roles') !== 'admin') {
             return redirect()->to('/login')->with('error', 'Accès refusé');

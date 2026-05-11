@@ -18,30 +18,33 @@ class Objectif extends BaseController
         $this->userObjectifModel = new UserObjectifModel();
     }
 
-    /**
-     * Liste tous les objectifs (Back Office)
-     */
     public function index()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $data = [
             'objectifs' => $this->objectifModel->findAll()
         ];
         return view('objectifs/index', $data);
     }
 
-    /**
-     * Affiche le formulaire de création (Back Office)
-     */
     public function create()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         return view('objectifs/create');
     }
 
-    /**
-     * Enregistre un nouvel objectif (Back Office)
-     */
     public function store()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
             'nom_objectif' => 'required|min_length[3]|is_unique[objectif.nom_objectif]',
         ])) {
@@ -55,11 +58,12 @@ class Objectif extends BaseController
         return redirect()->to('/objectifs')->with('success', 'Objectif créé avec succès');
     }
 
-    /**
-     * Affiche le formulaire d'édition (Back Office)
-     */
     public function edit($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $objectif = $this->objectifModel->find($id);
         if (!$objectif) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Objectif non trouvé');
@@ -69,13 +73,14 @@ class Objectif extends BaseController
         return view('objectifs/edit', $data);
     }
 
-    /**
-     * Met à jour un objectif (Back Office)
-     */
     public function update($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
-            'nom_objectif' => 'required|min_length[3]|is_unique[objectif.nom_objectif,id,{id}]',
+            'nom_objectif' => 'required|min_length[3]|is_unique[objectif.nom_objectif,id,' . $id . ']',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -87,18 +92,16 @@ class Objectif extends BaseController
         return redirect()->to('/objectifs')->with('success', 'Objectif mis à jour avec succès');
     }
 
-    /**
-     * Supprime un objectif (Back Office)
-     */
     public function delete($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $this->objectifModel->delete($id);
         return redirect()->to('/objectifs')->with('success', 'Objectif supprimé avec succès');
     }
 
-    /**
-     * Affiche les objectifs disponibles pour la sélection (Front Office)
-     */
     public function chooseObjectifs()
     {
         $session = session();
@@ -120,9 +123,6 @@ class Objectif extends BaseController
         return view('objectifs/choose', $data);
     }
 
-    /**
-     * Ajoute un objectif à l'utilisateur (Front Office)
-     */
     public function addObjectif()
     {
         $session = session();
@@ -145,7 +145,6 @@ class Objectif extends BaseController
             return redirect()->back()->with('error', 'Vous ne pouvez avoir que ' . self::MAX_OBJECTIFS_PER_USER . ' objectifs');
         }
 
-        // Vérifier si l'objectif n'est pas déjà choisi
         $existing = $this->userObjectifModel
             ->where('id_user', $userId)
             ->where('id_objectif', $idObjectif)
@@ -163,28 +162,6 @@ class Objectif extends BaseController
         return redirect()->back()->with('success', 'Objectif ajouté avec succès');
     }
 
-    /**
-     * Supprime un objectif de l'utilisateur (Front Office)
-     */
-    // public function removeObjectif($id)
-    // {
-    //     $session = session();
-    //     $userId = $session->get('user_id');
-
-    //     if (!$userId) {
-    //         return redirect()->to('/login');
-    //     }
-
-    //     $userObjectif = $this->userObjectifModel->find($id);
-        
-    //     if (!$userObjectif || $userObjectif['id_user'] != $userId) {
-    //         throw new \CodeIgniter\Exceptions\PageNotFoundException('Objectif non trouvé');
-    //     }
-
-    //     $this->userObjectifModel->delete($id);
-
-    //     return redirect()->back()->with('success', 'Objectif supprimé');
-    // }
     public function removeObjectif($idObjectif)
     {
         $session = session();

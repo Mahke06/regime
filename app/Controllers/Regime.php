@@ -16,14 +16,14 @@ class Regime extends BaseController
         $this->regimePrixModel = new RegimePrixModel();
     }
 
-    /**
-     * Liste tous les régimes
-     */
     public function index()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $regimes = $this->regimeModel->findAll();
-        
-        // Ajouter les prix pour chaque régime
+
         foreach ($regimes as &$regime) {
             $regime['prix'] = $this->regimePrixModel->getRegimePrix($regime['id']);
         }
@@ -32,19 +32,21 @@ class Regime extends BaseController
         return view('regimes/index', $data);
     }
 
-    /**
-     * Affiche le formulaire de création
-     */
     public function create()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         return view('regimes/create');
     }
 
-    /**
-     * Enregistre un nouveau régime
-     */
     public function store()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
             'nom' => 'required|min_length[3]',
             'pourcentage_viande' => 'required|is_natural|less_than_equal_to[100]',
@@ -64,11 +66,12 @@ class Regime extends BaseController
         return redirect()->to('/regimes')->with('success', 'Régime créé avec succès');
     }
 
-    /**
-     * Affiche le formulaire d'édition
-     */
     public function edit($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $regime = $this->regimeModel->find($id);
         if (!$regime) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Régime non trouvé');
@@ -78,11 +81,12 @@ class Regime extends BaseController
         return view('regimes/edit', $data);
     }
 
-    /**
-     * Met à jour un régime
-     */
     public function update($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
             'nom' => 'required|min_length[3]',
             'pourcentage_viande' => 'required|is_natural|less_than_equal_to[100]',
@@ -102,20 +106,22 @@ class Regime extends BaseController
         return redirect()->to('/regimes')->with('success', 'Régime mis à jour avec succès');
     }
 
-    /**
-     * Supprime un régime
-     */
     public function delete($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $this->regimeModel->delete($id);
         return redirect()->to('/regimes')->with('success', 'Régime supprimé avec succès');
     }
 
-    /**
-     * Gère les prix d'un régime
-     */
     public function managePrices($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $regime = $this->regimeModel->find($id);
         if (!$regime) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Régime non trouvé');
@@ -128,15 +134,16 @@ class Regime extends BaseController
         return view('regimes/manage_prices', $data);
     }
 
-    /**
-     * Ajoute un prix à un régime
-     */
     public function addPrice($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
             'duree' => 'required|is_natural_no_zero',
-            'prix' => 'required|is_natural_no_zero',
-            'variation_poids' => 'required|is_natural',
+            'prix' => 'required|decimal|greater_than[0]',
+            'variation_poids' => 'required|decimal',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }

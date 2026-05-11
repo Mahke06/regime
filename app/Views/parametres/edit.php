@@ -1,35 +1,37 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier paramètre</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container mt-4">
-    <h1 class="h3 mb-3">Modifier paramètre</h1>
+<?= $this->extend('layout') ?>
+<?= $this->section('content') ?>
 
-    <form method="post" action="/parametres/update/<?= esc($parametre['id']) ?>" class="card card-body">
+<div class="container py-4">
+    <div class="hero-panel mb-4">
+        <h1 class="h3 fw-bold mb-1">Modifier paramètre</h1>
+        <p class="text-muted mb-0">Mettez à jour la configuration #<?= esc($parametre['id']) ?>.</p>
+    </div>
+
+    <form method="post" action="/parametres/update/<?= esc($parametre['id']) ?>" class="suggestion-card p-4">
         <?= csrf_field() ?>
-        <div class="mb-3">
-            <label class="form-label">Clé</label>
-            <input type="text" name="cle" class="form-control" value="<?= old('cle', $parametre['cle']) ?>">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Valeur</label>
-            <input type="text" name="valeur" class="form-control" value="<?= old('valeur', $parametre['valeur']) ?>">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Description</label>
-            <textarea name="description" class="form-control" rows="3"><?= old('description', $parametre['description'] ?? '') ?></textarea>
-        </div>
-        <div>
-            <button class="btn btn-primary" type="submit">Mettre à jour</button>
-            <a class="btn btn-secondary" href="/parametres">Retour</a>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="cle">Clé</label>
+                <input type="text" id="cle" name="cle" value="<?= old('cle', $parametre['cle']) ?>">
+            </div>
+
+            <div class="col-md-6">
+                <label for="valeur">Valeur</label>
+                <input type="text" id="valeur" name="valeur" value="<?= old('valeur', $parametre['valeur']) ?>">
+            </div>
+
+            <div class="col-12">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3"><?= old('description', $parametre['description'] ?? '') ?></textarea>
+            </div>
+
+            <div class="col-12 d-flex flex-wrap gap-2">
+                <button class="btn btn-primary" type="submit">Mettre à jour</button>
+                <a class="btn btn-secondary" href="/parametres">Retour</a>
+            </div>
         </div>
     </form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+<?= $this->endSection() ?>

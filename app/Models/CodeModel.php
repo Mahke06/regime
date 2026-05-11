@@ -14,7 +14,6 @@ class CodeModel extends Model
     protected $allowedFields = ['code', 'montant', 'utilise'];
     protected $useTimestamps = false;
     protected $validationRules = [
-        // 'code' => 'required|is_natural_no_zero|is_unique[code.code,id,{id}]',
         'code' => 'required|max_length[50]|is_unique[code.code,id,{id}]',
         'montant' => 'required|is_natural',
         'utilise' => 'in_list[0,1]',

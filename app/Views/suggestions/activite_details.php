@@ -1,17 +1,20 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 
-<div class="activite-details-container">
-    <h1><?= $activite['nom'] ?></h1>
+<div class="container py-4">
+    <div class="hero-panel mb-4">
+        <h1 class="h2 fw-bold mb-2"><?= $activite['nom'] ?></h1>
+        <p class="text-muted mb-0">Détails de l'activité recommandée selon votre profil.</p>
+    </div>
 
-    <div class="activite-info">
-        <h2>Détails</h2>
+    <div class="suggestion-card mb-4 p-4">
+        <h2 class="h5 fw-bold mb-3">Détails</h2>
         <p><strong>Type:</strong> <?= str_replace('_', ' ', ucfirst($activite['types'])) ?></p>
         <p><strong>Calories Brûlées:</strong> <?= $activite['calories_brulees'] ?> calories</p>
     </div>
 
-    <div class="activite-recommendations">
-        <h2>Recommandé Pour:</h2>
+    <div class="suggestion-card mb-4 p-4">
+        <h2 class="h5 fw-bold mb-3">Recommandé Pour</h2>
         <ul>
             <?php if (strpos($activite['types'], 'perte') !== false): ?>
                 <li>✓ Perte de Poids</li>
@@ -25,8 +28,8 @@
         </ul>
     </div>
 
-    <div class="user-objectifs">
-        <h2>Vos Objectifs:</h2>
+    <div class="suggestion-card mb-4 p-4">
+        <h2 class="h5 fw-bold mb-3">Vos Objectifs</h2>
         <ul>
             <?php foreach ($userObjectifs as $objectif): ?>
                 <li><?= $objectif['nom_objectif'] ?></li>

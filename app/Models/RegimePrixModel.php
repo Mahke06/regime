@@ -23,9 +23,6 @@ class RegimePrixModel extends Model
     protected $skipValidation = false;
     protected $cleanValidationRules = true;
 
-    /**
-     * Récupère tous les prix d'un régime
-     */
     public function getRegimePrix($idRegime)
     {
         return $this->where('id_regime', $idRegime)
@@ -33,9 +30,6 @@ class RegimePrixModel extends Model
             ->findAll();
     }
 
-    /**
-     * Récupère le prix d'un régime pour une durée spécifique
-     */
     public function getPrixByDuree($idRegime, $duree)
     {
         return $this->where('id_regime', $idRegime)
@@ -43,11 +37,8 @@ class RegimePrixModel extends Model
             ->first();
     }
 
-    /**
-     * Applique la remise Gold (15%)
-     */
     public function getPrixWithGoldDiscount($prix)
     {
-        return $prix * 0.85; // 15% de remise
+        return $prix * 0.85;
     }
 }

@@ -16,30 +16,33 @@ class Code extends BaseController
         $this->userModel = new UserModel();
     }
 
-    /**
-     * Liste tous les codes
-     */
     public function index()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $data = [
             'codes' => $this->codeModel->findAll()
         ];
         return view('codes/index', $data);
     }
 
-    /**
-     * Affiche le formulaire de création
-     */
     public function create()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         return view('codes/create');
     }
 
-    /**
-     * Enregistre un nouveau code
-     */
     public function store()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
             'code' => 'required|is_natural_no_zero|is_unique[code.code]',
             'montant' => 'required|is_natural_no_zero',
@@ -56,11 +59,12 @@ class Code extends BaseController
         return redirect()->to('/codes')->with('success', 'Code créé avec succès');
     }
 
-    /**
-     * Affiche le formulaire d'édition
-     */
     public function edit($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $code = $this->codeModel->find($id);
         if (!$code) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Code non trouvé');
@@ -70,13 +74,14 @@ class Code extends BaseController
         return view('codes/edit', $data);
     }
 
-    /**
-     * Met à jour un code
-     */
     public function update($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         if (!$this->validate([
-            'code' => 'required|is_natural_no_zero|is_unique[code.code,id,{id}]',
+            'code' => 'required|is_natural_no_zero|is_unique[code.code,id,' . $id . ']',
             'montant' => 'required|is_natural_no_zero',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
@@ -90,18 +95,16 @@ class Code extends BaseController
         return redirect()->to('/codes')->with('success', 'Code mis à jour avec succès');
     }
 
-    /**
-     * Supprime un code
-     */
     public function delete($id)
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $this->codeModel->delete($id);
         return redirect()->to('/codes')->with('success', 'Code supprimé avec succès');
     }
 
-    /**
-     * Utilise un code pour recharger le portefeuille (Front Office)
-     */
     public function redeem()
     {
         $session = session();
@@ -112,7 +115,6 @@ class Code extends BaseController
         }
 
         if (!$this->validate([
-            // 'code' => 'required|is_natural_no_zero',
             'code' => 'required|max_length[50]',
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
@@ -129,10 +131,8 @@ class Code extends BaseController
             return redirect()->back()->with('error', 'Code déjà utilisé');
         }
 
-        // Marquer le code comme utilisé
         $this->codeModel->update($codeData['id'], ['utilise' => true]);
 
-        // Ajouter l'argent au solde de l'utilisateur
         $user = $this->userModel->find($userId);
         $newSolde = $user['solde'] + $codeData['montant'];
         $this->userModel->update($userId, ['solde' => $newSolde]);

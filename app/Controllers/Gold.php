@@ -22,9 +22,6 @@ class Gold extends BaseController
         $this->parametreModel = new ParametreModel();
     }
 
-    /**
-     * Affiche la page d'activation Gold
-     */
     public function activate()
     {
         $session = session();
@@ -49,9 +46,6 @@ class Gold extends BaseController
         return view('gold/activate', $data);
     }
 
-    /**
-     * Traite le paiement Gold
-     */
     public function purchase()
     {
         $session = session();
@@ -63,25 +57,21 @@ class Gold extends BaseController
 
         $user = $this->userModel->find($userId);
 
-        // Vérifier si l'utilisateur a déjà Gold
         if ($user['gold']) {
             return redirect()->to('/profile')->with('error', 'Vous avez déjà l\'abonnement Gold');
         }
 
-        // Vérifier le solde
         $price = $this->getGoldPrice();
 
         if ($user['solde'] < $price) {
             return redirect()->back()->with('error', 'Solde insuffisant. Veuillez recharger votre portefeuille');
         }
 
-        // Enregistrer le paiement
         $this->goldModel->save([
             'id_utilisateur' => $userId,
             'montant' => $price,
         ]);
 
-        // Déduire du solde et activer Gold
         $newSolde = $user['solde'] - $price;
         $this->userModel->update($userId, [
             'solde' => $newSolde,
@@ -94,11 +84,12 @@ class Gold extends BaseController
         return redirect()->to('/profile')->with('success', 'Félicitations! Vous avez activé l\'abonnement Gold. Bénéficiez de 15% de remise sur tous les régimes!');
     }
 
-    /**
-     * Liste les paiements Gold (Back Office Admin)
-     */
     public function index()
     {
+        if ($redirect = $this->requireAdmin()) {
+            return $redirect;
+        }
+
         $data = [
             'paiements' => $this->goldModel
                 ->select('paiement_gold.*, user.nom, user.email')
@@ -108,17 +99,11 @@ class Gold extends BaseController
         return view('gold/index', $data);
     }
 
-    /**
-     * Retourne le prix Gold
-     */
     public static function getPrice()
     {
         return self::GOLD_PRICE;
     }
 
-    /**
-     * Retourne le pourcentage de remise
-     */
     public static function getDiscount()
     {
         return self::GOLD_DISCOUNT;

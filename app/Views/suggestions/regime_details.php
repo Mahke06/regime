@@ -1,20 +1,23 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 
-<div class="regime-details-container">
-    <h1><?= $regime['nom'] ?></h1>
-
-    <div class="regime-composition">
-        <h2>Composition du Régime</h2>
-        <ul>
-            <li>🥩 <strong>Viande:</strong> <?= $regime['pourcentage_viande'] ?>%</li>
-            <li>🐟 <strong>Poisson:</strong> <?= $regime['pourcentage_poisson'] ?>%</li>
-            <li>🐔 <strong>Volaille:</strong> <?= $regime['pourcentage_volaille'] ?>%</li>
-        </ul>
+<div class="container py-4">
+    <div class="hero-panel mb-4">
+        <h1 class="h2 fw-bold mb-2"><?= $regime['nom'] ?></h1>
+        <p class="text-muted mb-0">Détails complets du régime sélectionné.</p>
     </div>
 
-    <div class="regime-prices">
-        <h2>Options de Durée et Prix</h2>
+    <div class="suggestion-card mb-4 p-4">
+        <h2 class="h5 fw-bold mb-3">Composition du Régime</h2>
+        <div class="row g-3 text-center">
+            <div class="col-md-4"><div class="p-3 rounded-3 bg-light"><strong><?= $regime['pourcentage_viande'] ?>%</strong><div class="small text-muted">Viande</div></div></div>
+            <div class="col-md-4"><div class="p-3 rounded-3 bg-light"><strong><?= $regime['pourcentage_poisson'] ?>%</strong><div class="small text-muted">Poisson</div></div></div>
+            <div class="col-md-4"><div class="p-3 rounded-3 bg-light"><strong><?= $regime['pourcentage_volaille'] ?>%</strong><div class="small text-muted">Volaille</div></div></div>
+        </div>
+    </div>
+
+    <div class="suggestion-card mb-4 p-4">
+        <h2 class="h5 fw-bold mb-3">Options de Durée et Prix</h2>
         
         <?php if (!empty($prices)): ?>
             <table border="1">
@@ -55,8 +58,8 @@
         <?php endif; ?>
     </div>
 
-    <div class="regime-user-info">
-        <h2>Vos Informations</h2>
+    <div class="suggestion-card mb-4 p-4">
+        <h2 class="h5 fw-bold mb-3">Vos Informations</h2>
         <p><strong>Solde:</strong> <?= number_format($user['solde'], 2) ?>€</p>
         <p><strong>Vos Objectifs:</strong></p>
         <ul>

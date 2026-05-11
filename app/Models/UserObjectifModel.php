@@ -21,9 +21,6 @@ class UserObjectifModel extends Model
     protected $skipValidation = false;
     protected $cleanValidationRules = true;
 
-    /**
-     * Récupère les objectifs d'un utilisateur
-     */
     public function getUserObjectifs($idUser)
     {
         return $this->select('objectif.*')
@@ -32,9 +29,6 @@ class UserObjectifModel extends Model
             ->findAll();
     }
 
-    /**
-     * Compte les objectifs d'un utilisateur
-     */
     public function countUserObjectifs($idUser)
     {
         return $this->where('id_user', $idUser)->countAllResults();
