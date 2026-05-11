@@ -166,7 +166,26 @@ class Objectif extends BaseController
     /**
      * Supprime un objectif de l'utilisateur (Front Office)
      */
-    public function removeObjectif($id)
+    // public function removeObjectif($id)
+    // {
+    //     $session = session();
+    //     $userId = $session->get('user_id');
+
+    //     if (!$userId) {
+    //         return redirect()->to('/login');
+    //     }
+
+    //     $userObjectif = $this->userObjectifModel->find($id);
+        
+    //     if (!$userObjectif || $userObjectif['id_user'] != $userId) {
+    //         throw new \CodeIgniter\Exceptions\PageNotFoundException('Objectif non trouvé');
+    //     }
+
+    //     $this->userObjectifModel->delete($id);
+
+    //     return redirect()->back()->with('success', 'Objectif supprimé');
+    // }
+    public function removeObjectif($idObjectif)
     {
         $session = session();
         $userId = $session->get('user_id');
@@ -175,13 +194,16 @@ class Objectif extends BaseController
             return redirect()->to('/login');
         }
 
-        $userObjectif = $this->userObjectifModel->find($id);
-        
-        if (!$userObjectif || $userObjectif['id_user'] != $userId) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Objectif non trouvé');
+        $userObjectif = $this->userObjectifModel
+            ->where('id_user', $userId)
+            ->where('id_objectif', $idObjectif)
+            ->first();
+
+        if (!$userObjectif) {
+            return redirect()->back()->with('error', 'Objectif non trouvé');
         }
 
-        $this->userObjectifModel->delete($id);
+        $this->userObjectifModel->delete($userObjectif['id']);
 
         return redirect()->back()->with('success', 'Objectif supprimé');
     }
