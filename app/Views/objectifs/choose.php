@@ -4,12 +4,12 @@
 <div class="container py-4 objectifs-page">
     <div class="row g-4 align-items-start">
         <div class="col-lg-8">
-            <div class="d-flex justify-content-between align-items-center mb-3 hero-panel p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3 p-3" style="background:transparent">
                 <div>
-                    <h1 class="h2 fw-bold mb-1">Choisir mes objectifs</h1>
+                    <h1 class="h2 fw-bold mb-1" style="color:var(--ink-1);">Choisir mes objectifs</h1>
                     <p class="text-muted mb-0">Sélectionnez jusqu’à <strong><?= $maxObjectifs ?></strong> objectifs.</p>
                 </div>
-                <div class="badge bg-dark rounded-pill px-3 py-2 fs-6">
+                <div class="badge" style="background:var(--brand-1); color:#fff; border-radius:999px; padding:6px 12px; font-weight:600;">
                     <?= count($userObjectifs) ?>/<?= $maxObjectifs ?> choisis
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     }
                     ?>
                     <div class="col-md-6">
-                        <div class="suggestion-card h-100 <?= $isSelected ? 'border border-success' : '' ?>">
+                        <div class="card rounded-4 bg-white shadow-sm h-100 <?= $isSelected ? 'border border-success' : '' ?>">
                             <div class="card-body p-4 d-flex flex-column">
                                 <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
                                     <div>
@@ -35,9 +35,9 @@
                                         <p class="text-muted mb-0">Objectif personnel pour votre parcours.</p>
                                     </div>
                                     <?php if ($isSelected): ?>
-                                        <span class="badge bg-success rounded-pill">Sélectionné</span>
+                                        <span class="badge" style="background:var(--brand-2); color:#fff; border-radius:999px; padding:6px 10px">Sélectionné</span>
                                     <?php else: ?>
-                                        <span class="badge bg-secondary rounded-pill">Disponible</span>
+                                        <span class="badge" style="background:#94a3b8; color:#fff; border-radius:999px; padding:6px 10px">Disponible</span>
                                     <?php endif; ?>
                                 </div>
 
@@ -60,7 +60,7 @@
         </div>
 
         <div class="col-lg-4">
-            <div class="suggestion-card sticky-top" style="top:1rem;">
+            <div class="card sticky-top rounded-4" style="top:1rem;">
                 <div class="card-body p-4">
                     <h3 class="h5 fw-bold mb-3">Mes objectifs sélectionnés</h3>
 

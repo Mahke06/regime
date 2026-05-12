@@ -2,9 +2,9 @@
 <?= $this->section('content') ?>
 
 <div class="container py-4">
-    <div class="hero-panel mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h1 class="h3 fw-bold mb-1">Paramètres</h1>
+                <h1 class="h3 fw-bold mb-1" style="color:var(--ink-1);">Paramètres</h1>
                 <p class="text-muted mb-0">Gérez les valeurs dynamiques de l’application.</p>
             </div>
             <a class="btn btn-primary btn-lg" href="/parametres/create">Nouveau paramètre</a>
@@ -14,7 +14,7 @@
         <div class="alert alert-success border-0 shadow-sm rounded-4"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>
 
-    <div class="suggestion-card p-0">
+    <div class="card p-0">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table align-middle mb-0 table-hover">

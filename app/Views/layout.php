@@ -17,11 +17,12 @@
 
 <body class="site">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background: rgba(16,185,129,0.06);">
     <div class="container">
 
-        <a class="navbar-brand fw-bold" href="/">
-            Régime App
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="/">
+            <i class="bi bi-leaf-fill" style="color:var(--brand-1); font-size:1.2rem"></i>
+            <span style="color:var(--ink-1);">Régime Santé</span>
         </a>
 
         <button class="navbar-toggler" type="button"
@@ -33,138 +34,48 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
 
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-center">
 
                 <?php if (session()->get('user_id')): ?>
 
                     <?php if (session()->get('roles') === 'admin'): ?>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="/dashboard">
-                                Dashboard
+                            <a class="nav-link text-dark" href="/dashboard">
+                                <i class="bi bi-speedometer2 me-1"></i> Dashboard
                             </a>
                         </li>
 
                         <li class="nav-item dropdown">
-
-                            <a class="nav-link dropdown-toggle"
-                               href="#"
-                               id="adminMenu"
-                               role="button"
-                               data-bs-toggle="dropdown">
-
-                                Gestion
-                            </a>
-
-                            <ul class="dropdown-menu">
-
-                                <li>
-                                    <a class="dropdown-item" href="/users">
-                                        Utilisateurs
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="dropdown-item" href="/activites">
-                                        Activités
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="dropdown-item" href="/regimes">
-                                        Régimes
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="dropdown-item" href="/codes">
-                                        Codes Promo
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="dropdown-item" href="/objectifs">
-                                        Objectifs
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="dropdown-item" href="/parametres">
-                                        Paramètres
-                                    </a>
-                                </li>
-
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="adminMenu" role="button" data-bs-toggle="dropdown">Gestion</a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/users">Utilisateurs</a></li>
+                                <li><a class="dropdown-item" href="/regimes">Régimes</a></li>
+                                <li><a class="dropdown-item" href="/activites">Activités</a></li>
+                                <li><a class="dropdown-item" href="/codes">Codes</a></li>
+                                <li><a class="dropdown-item" href="/parametres">Paramètres</a></li>
                             </ul>
-
                         </li>
 
-                        <li class="nav-item">
-                            <span class="nav-link text-warning">
-                                <i class="bi bi-person-circle"></i>
-                                <?= esc(session()->get('nom')) ?>
-                            </span>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/logout">
-                                Déconnexion
-                            </a>
+                        <li class="nav-item ms-2">
+                            <span class="nav-link text-success"><i class="bi bi-person-circle"></i> <?= esc(session()->get('nom')) ?></span>
                         </li>
 
                     <?php else: ?>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="/profile">
-                                Profil
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/objectifs/choose">
-                                Objectifs
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/suggestions">
-                                Suggestions
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/gold/activate">
-                                Gold
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <span class="nav-link text-success">
-                                Solde :
-                                <?= number_format(session()->get('solde'), 2) ?> €
-                            </span>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout">
-                                Déconnexion
-                            </a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link text-dark" href="/suggestions"><i class="bi bi-lightbulb me-1"></i> Suggestions</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" href="/objectifs/choose"><i class="bi bi-bullseye me-1"></i> Objectifs</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" href="/gold/activate"><i class="bi bi-gem me-1"></i> Gold</a></li>
+                        <li class="nav-item ms-2"><span class="nav-link fw-semibold text-dark"><i class="bi bi-wallet2"></i> <?= number_format(session()->get('solde'), 2) ?> €</span></li>
 
                     <?php endif; ?>
 
+                    <li class="nav-item ms-2"><a class="nav-link text-dark" href="/logout"><i class="bi bi-box-arrow-right"></i> Déconnexion</a></li>
+
                 <?php else: ?>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">
-                            Connexion
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">
-                            Inscription
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="/login">Connexion</a></li>
+                    <li class="nav-item"><a class="nav-link text-dark" href="/register">Inscription</a></li>
 
                 <?php endif; ?>
 

@@ -2,15 +2,15 @@
 <?= $this->section('content') ?>
 
 <div class="container py-4">
-    <div class="hero-panel mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
         <div>
-            <h1 class="h3 fw-bold mb-1">Gestion des Régimes</h1>
+            <h1 class="h3 fw-bold mb-1" style="color:var(--ink-1);">Gestion des Régimes</h1>
             <p class="text-muted mb-0">Gérez les compositions nutritionnelles et les actions associées.</p>
         </div>
         <a href="/regimes/create" class="btn btn-primary">Ajouter un Régime</a>
     </div>
 
-    <div class="suggestion-card p-0">
+    <div class="card p-0">
         <div class="table-responsive">
             <table class="table align-middle mb-0">
                 <thead>

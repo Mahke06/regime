@@ -3,22 +3,24 @@
 }
 
 :root {
-  --bg-1: #edf4ff;
-  --bg-2: #f9fbff;
-  --ink-1: #0d1b3d;
-  --ink-2: #334155;
-  --brand-1: #2563eb;
-  --brand-2: #0ea5e9;
-  --ok: #16a34a;
-  --warn: #d97706;
-  --danger: #dc2626;
+  /* Theme: Régime / Perte de poids - tons verts et neutres */
+  --bg-1: #f6fff6;
+  --bg-2: #f0fff4;
+  --ink-1: #023020;
+  --ink-2: #04543a;
+  --brand-1: #10b981; /* green */
+  --brand-2: #059669; /* darker green */
+  --accent: #f97316; /* energetic accent */
+  --ok: #10b981;
+  --warn: #f59e0b;
+  --danger: #ef4444;
   --surface: #ffffff;
-  --surface-2: #f8fbff;
-  --border: #d6e2f3;
-  --radius-lg: 16px;
-  --radius-md: 12px;
-  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.06);
-  --shadow-strong: 0 18px 60px rgba(15, 23, 42, 0.12);
+  --surface-2: #f6fffa;
+  --border: #d6f6e7;
+  --radius-lg: 14px;
+  --radius-md: 10px;
+  --shadow-soft: 0 10px 30px rgba(2, 64, 43, 0.06);
+  --shadow-strong: 0 18px 60px rgba(2, 64, 43, 0.10);
 }
 
 html,
@@ -34,12 +36,10 @@ main { flex: 1 0 auto; }
 
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: radial-gradient(circle at 10% -20%, #dce9ff 0%, transparent 40%),
-              radial-gradient(circle at 95% 10%, #d8f6ff 0%, transparent 30%),
-              linear-gradient(180deg, var(--bg-2) 0%, var(--bg-1) 100%);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
   color: var(--ink-1);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* Global typographic scale for a more professional look */
@@ -103,14 +103,14 @@ a:hover {
 }
 
 .navbar {
-  background: linear-gradient(120deg, #071639 0%, #102a72 48%, #0e7490 100%);
-  box-shadow: 0 8px 30px rgba(2, 6, 23, 0.26);
+  background: linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(5,150,105,0.10) 100%);
+  box-shadow: 0 6px 24px rgba(2, 64, 43, 0.08);
 }
 
 .navbar-brand,
 .nav-link {
-  color: #fff !important;
-  font-weight: 600;
+  color: var(--ink-1);
+  font-weight: 700;
 }
 
 .nav-link:hover {
@@ -170,13 +170,15 @@ input[type='submit']:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
   color: #fff;
-  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.22);
+  box-shadow: 0 8px 30px rgba(16,185,129,0.12);
+  border: none;
 }
 
 .btn-primary:hover {
-  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 46px rgba(16,185,129,0.16);
 }
 
 .btn-secondary {

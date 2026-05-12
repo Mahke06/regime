@@ -7,7 +7,7 @@
         <p class="text-muted mb-0">Configurez les durées, tarifs et variations de poids.</p>
     </div>
 
-    <div class="suggestion-card p-0 mb-4">
+    <div class="card p-0 mb-4">
         <div class="card-body p-4 pb-0">
             <h2 class="h5 fw-bold">Prix existants</h2>
         </div>
@@ -40,29 +40,31 @@
         <?php endif; ?>
     </div>
 
-    <form method="POST" action="/regimes/add-price/<?= $regime['id'] ?>" class="suggestion-card p-4">
-        <?= csrf_field() ?>
-        <h2 class="h5 fw-bold mb-3">Ajouter un prix</h2>
+    <form method="POST" action="/regimes/add-price/<?= $regime['id'] ?>" class="card p-4">
+        <div class="card-body">
+            <?= csrf_field() ?>
+            <h2 class="h5 fw-bold mb-3">Ajouter un prix</h2>
 
-        <div class="row g-3">
-            <div class="col-md-4">
-                <label for="duree">Durée (jours)</label>
-                <input type="number" id="duree" name="duree" value="<?= old('duree') ?>" required>
-            </div>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="duree" class="form-label">Durée (jours)</label>
+                    <input type="number" id="duree" name="duree" value="<?= old('duree') ?>" class="form-control" required>
+                </div>
 
-            <div class="col-md-4">
-                <label for="prix">Prix (€)</label>
-                <input type="number" id="prix" name="prix" value="<?= old('prix') ?>" step="0.01" required>
-            </div>
+                <div class="col-md-4">
+                    <label for="prix" class="form-label">Prix (€)</label>
+                    <input type="number" id="prix" name="prix" value="<?= old('prix') ?>" step="0.01" class="form-control" required>
+                </div>
 
-            <div class="col-md-4">
-                <label for="variation_poids">Variation Poids (kg)</label>
-                <input type="number" id="variation_poids" name="variation_poids" value="<?= old('variation_poids') ?>" step="0.1" required>
-            </div>
+                <div class="col-md-4">
+                    <label for="variation_poids" class="form-label">Variation Poids (kg)</label>
+                    <input type="number" id="variation_poids" name="variation_poids" value="<?= old('variation_poids') ?>" step="0.1" class="form-control" required>
+                </div>
 
-            <div class="col-12 d-flex flex-wrap gap-2">
-                <button type="submit" class="btn btn-primary">Ajouter Prix</button>
-                <a href="/regimes" class="btn btn-secondary">Retour</a>
+                <div class="col-12 d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-primary">Ajouter Prix</button>
+                    <a href="/regimes" class="btn btn-outline-secondary">Retour</a>
+                </div>
             </div>
         </div>
     </form>

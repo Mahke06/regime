@@ -2,48 +2,54 @@
 <?= $this->section('content') ?>
 
 <div class="container py-4">
-    <div class="auth-container hero-panel">
-    <h1 class="hero-lead mb-2" style="font-size:2.2rem;">Connexion</h1>
-    <p class="text-muted mb-4">Connectez-vous pour accéder à votre espace santé personnalisé.</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card rounded-4 shadow-sm p-4">
+                <h1 class="h4 fw-bold mb-2">Connexion</h1>
+                <p class="text-muted mb-4">Connectez-vous pour accéder à votre espace santé personnalisé.</p>
 
-    <?php $errors = session()->getFlashdata('errors') ?? []; ?>
+                <?php $errors = session()->getFlashdata('errors') ?? []; ?>
 
-    <?php if (session()->getFlashdata('success')): ?>
-        <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
-    <?php endif; ?>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
+                <?php endif; ?>
 
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
-    <?php endif; ?>
+                <?php if (session()->getFlashdata('error')): ?>
+                    <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+                <?php endif; ?>
 
-    <form method="POST" action="/authenticate" id="login-form">
-        <?= csrf_field() ?>
+                <form method="POST" action="/authenticate" id="login-form">
+                    <?= csrf_field() ?>
 
-        <div class="form-group">
-            <label for="email">Adresse email</label>
-            <input type="email" id="email" name="email" value="<?= old('email') ?>" placeholder="exemple@email.com" autocomplete="email" required>
-            <small>Entrez l’adresse email utilisée lors de votre inscription.</small>
-            <?php if (isset($errors['email'])): ?>
-                <div class="field-error"><?= $errors['email'] ?></div>
-            <?php endif; ?>
-        </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Adresse email</label>
+                        <input type="email" id="email" name="email" value="<?= old('email') ?>" class="form-control" placeholder="exemple@email.com" autocomplete="email" required>
+                        <div class="form-text">Entrez l’adresse email utilisée lors de votre inscription.</div>
+                        <?php if (isset($errors['email'])): ?>
+                            <div class="text-danger small"><?= $errors['email'] ?></div>
+                        <?php endif; ?>
+                    </div>
 
-        <div class="form-group">
-            <label for="mot_de_passe">Mot de passe</label>
-            <div class="password-row">
-                <input type="password" id="mot_de_passe" name="mot_de_passe" placeholder="Votre mot de passe" autocomplete="current-password" required>
-                <button type="button" class="password-toggle" id="toggle-password">Afficher</button>
+                    <div class="mb-3">
+                        <label for="mot_de_passe" class="form-label">Mot de passe</label>
+                        <div class="input-group">
+                            <input type="password" id="mot_de_passe" name="mot_de_passe" class="form-control" placeholder="Votre mot de passe" autocomplete="current-password" required>
+                            <button type="button" class="btn btn-outline-secondary" id="toggle-password">Afficher</button>
+                        </div>
+                        <div class="form-text">Le mot de passe est celui que vous avez créé à l’inscription.</div>
+                        <?php if (isset($errors['mot_de_passe'])): ?>
+                            <div class="text-danger small"><?= $errors['mot_de_passe'] ?></div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary" id="login-submit">Se connecter</button>
+                    </div>
+                </form>
+
+                <div class="mt-3 text-center"><p class="mb-0">Pas encore inscrit ? <a href="/register">Créer un compte</a></p></div>
             </div>
-            <small>Le mot de passe est celui que vous avez créé à l’inscription. Vous pouvez l’afficher pour vérifier la saisie.</small>
-            <?php if (isset($errors['mot_de_passe'])): ?>
-                <div class="field-error"><?= $errors['mot_de_passe'] ?></div>
-            <?php endif; ?>
         </div>
-
-        <button type="submit" class="btn btn-primary" id="login-submit">Se connecter</button>
-    </form>
-
-    <p>Pas encore inscrit ? <a href="/register">Créer un compte</a></p>
     </div>
 </div>
 

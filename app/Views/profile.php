@@ -5,17 +5,15 @@
 
     <div class="row g-4">
         <div class="col-12">
-            <div class="hero-panel">
+            <div class="card rounded-4 mb-3">
                 <div class="card-body p-4 p-md-5 d-flex flex-wrap justify-content-between align-items-center gap-3">
                     <div>
-                        <span class="badge <?= $user['gold'] ? 'bg-warning text-dark' : 'bg-secondary' ?> rounded-pill mb-3">
-                            <?= $user['gold'] ? 'Gold actif' : 'Compte standard' ?>
-                        </span>
+                        <span class="badge" style="background:<?= $user['gold'] ? "#fbbf24" : "#94a3b8" ?>; color:#111; border-radius:999px; padding:6px 12px;"><?= $user['gold'] ? 'Gold actif' : 'Compte standard' ?></span>
                         <h1 class="h2 fw-bold mb-2">Mon profil</h1>
                         <p class="text-muted mb-0">Bienvenue <?= esc($user['nom']) ?>, voici votre résumé personnel.</p>
                     </div>
                     <div class="text-end">
-                        <div class="display-6 fw-bold text-primary mb-1"><?= number_format($user['solde'], 2) ?> AR</div>
+                        <div class="display-6 fw-bold" style="color:var(--brand-1)"><?= number_format($user['solde'], 2) ?> AR</div>
                         <div class="text-muted">Solde disponible</div>
                     </div>
                 </div>
@@ -23,7 +21,7 @@
         </div>
 
         <div class="col-lg-7">
-            <div class="suggestion-card mb-4">
+            <div class="card mb-4 rounded-4 shadow-sm">
                 <div class="card-body p-4">
                     <h3 class="h5 fw-bold mb-3">Informations personnelles</h3>
                     <div class="row g-3">
@@ -61,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="suggestion-card">
+            <div class="card mb-4 rounded-4 shadow-sm">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h3 class="h5 fw-bold mb-0">Mes objectifs</h3>
@@ -82,9 +80,9 @@
         </div>
 
         <div class="col-lg-5">
-                <div class="suggestion-card mb-4">
-                    <div class="card-body p-4">
-                    <h3 class="h5 fw-bold mb-3">Modifier mon profil</h3>
+            <div class="card mb-4 rounded-4 shadow-sm">
+                <div class="card-body p-4">
+                <h3 class="h5 fw-bold mb-3">Modifier mon profil</h3>
                     <form method="POST" action="/profile/update" class="row g-3">
                         <?= csrf_field() ?>
                         <div class="col-12">
@@ -109,9 +107,9 @@
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-body p-4">
                     <h3 class="h5 fw-bold mb-3">Portefeuille</h3>
-                    <div class="p-4 rounded-4 bg-dark text-white mb-3">
-                        <span class="d-block text-white-50 mb-1">Solde actuel</span>
-                        <h2 class="mb-0"><?= number_format($user['solde'], 2) ?> AR</h2>
+                    <div class="p-4 rounded-4" style="background:linear-gradient(90deg, rgba(16,185,129,0.08), rgba(5,150,105,0.04)); margin-bottom:1rem;">
+                        <span class="d-block text-muted mb-1">Solde actuel</span>
+                        <h2 class="mb-0" style="color:var(--brand-1)"><?= number_format($user['solde'], 2) ?> AR</h2>
                     </div>
 
                     <form method="POST" action="/codes/redeem" class="row g-3">
@@ -128,13 +126,13 @@
             </div>
 
             <?php if (!$user['gold']): ?>
-                <div class="suggestion-card bg-warning-subtle">
+                <div class="card rounded-4 mb-3">
                     <div class="card-body p-4 d-flex justify-content-between align-items-center gap-3">
                         <div>
                             <h3 class="h5 fw-bold mb-2">Activez Gold Premium</h3>
                             <p class="mb-0 text-muted">Profitez de 15% de réduction sur tous les régimes.</p>
                         </div>
-                        <a href="/gold/activate" class="btn btn-warning text-dark fw-semibold">Activer</a>
+                        <a href="/gold/activate" class="btn btn-primary" style="background:linear-gradient(90deg,var(--brand-2),var(--brand-1)); border:0;">Activer</a>
                     </div>
                 </div>
             <?php endif; ?>

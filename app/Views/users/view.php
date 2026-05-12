@@ -2,15 +2,15 @@
 <?= $this->section('content') ?>
 
 <div class="container py-4">
-    <div class="hero-panel mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h1 class="h3 fw-bold mb-1"><?= $user['nom'] ?></h1>
+            <h1 class="h3 fw-bold mb-1" style="color:var(--ink-1);"><?= $user['nom'] ?></h1>
             <p class="text-muted mb-0">Détails complets du profil utilisateur.</p>
         </div>
-        <a href="/users" class="btn btn-secondary">Retour</a>
+        <a href="/users" class="btn btn-outline-secondary">Retour</a>
     </div>
 
-    <div class="suggestion-card p-4">
+    <div class="card rounded-4 p-4 shadow-sm">
         <div class="row g-3">
             <div class="col-md-6"><div class="p-3 bg-light rounded-3"><strong>Email:</strong> <?= $user['email'] ?></div></div>
             <div class="col-md-6"><div class="p-3 bg-light rounded-3"><strong>Genre:</strong> <?= ucfirst($user['genre']) ?></div></div>

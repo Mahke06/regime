@@ -2,12 +2,12 @@
 <?= $this->section('content') ?>
 
 <div class="container py-4">
-    <div class="hero-panel mb-4">
-        <h1 class="h3 fw-bold mb-1">Gestion des Utilisateurs</h1>
+    <div class="mb-4">
+        <h1 class="h3 fw-bold mb-1" style="color:var(--ink-1);">Gestion des Utilisateurs</h1>
         <p class="text-muted mb-0">Consultez les profils, soldes et statuts de vos utilisateurs.</p>
     </div>
 
-    <div class="suggestion-card p-0">
+    <div class="card p-0">
         <div class="table-responsive">
             <table class="table align-middle mb-0">
                 <thead>
